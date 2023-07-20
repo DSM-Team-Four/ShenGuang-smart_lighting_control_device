@@ -86,7 +86,7 @@ Hi3861通过UART串口接收Taurus传来的物体检测信息，进而通过PWM0
 
 Hi3861通过TCP-client连接，其本身作为server服务器连接WLAN路由器，获取到IP地址，任何连接到该局域网下的设备都可连接到Hi3861，进而用户可通过手机APP控制LED灯和马达的运动。
 
-![img](https://alivender-assets.oss-cn-beijing.aliyuncs.com/wp-content/uploads/img/PicGoPicGoclip_image002.gif)
+![hi-cut](https://alivender-assets.oss-cn-beijing.aliyuncs.com/wp-content/uploads/img/PicGohi-cut.png)
 
 ### 各模块介绍
 
@@ -136,11 +136,11 @@ Hi3861通过TCP-client连接，其本身作为server服务器连接WLAN路由器
 
 1. TCP连接，UART通讯方式如何保证有效性？在开发过程中，我们发现WIFI连接和UART连接都存在一定可能的消息接发滞后、丢失和错误。误差无法避免，只能寻找减少误差的优化办法。为此我们选择了——只发一个字节。即字节之间不存在任何联系，一个字节就代表了一个完整的命令。这样即使丢失数据是命令的全体丢失，只要设备多发几次，就能保证数据正常到达，而不会让主控收到残缺的命令指示产生误解。例如，手机APP上滑块调节灯的亮度，发送的字节是ASCII码 32 到 122，逆时针，顺时针分别发送 ‘{’ , ‘|’, ‘}’, ‘~’。（四个字符是因为分别是起始标志和结束标志）
 
-![img](https://alivender-assets.oss-cn-beijing.aliyuncs.com/wp-content/uploads/img/PicGoclip_image002.jpg "Hi3861中实现信号识别的部分代码")
+![img](https://alivender-assets.oss-cn-beijing.aliyuncs.com/wp-content/uploads/img/PicGopaste1.png "Hi3861中实现信号识别的部分代码")
 
 同理，在Hi3861通过UART与Taurus通信时，Taurus会对物体种类和坐标进行数据处理成一个字节，再将其发送给Hi3861，而不是发送五条信息（种类和xy坐标），避免了因数据缺失导致的解析错误。
 
-![img](https://alivender-assets.oss-cn-beijing.aliyuncs.com/wp-content/uploads/img/PicGoclip_image004.jpg)
+![img](https://alivender-assets.oss-cn-beijing.aliyuncs.com/wp-content/uploads/img/PicGoSnipaste_2023-07-20_11-26-56.png)
 
 上面的图解展示了处理字节的方式。八位字节的处理方式分以下情况：
 
@@ -152,4 +152,4 @@ Hi3861通过TCP-client连接，其本身作为server服务器连接WLAN路由器
 
 2. 关于安卓端APP实现TCP连接和发送接收
 
-![img](https://alivender-assets.oss-cn-beijing.aliyuncs.com/wp-content/uploads/img/PicGoclip_image006.gif)
+![img](https://alivender-assets.oss-cn-beijing.aliyuncs.com/wp-content/uploads/img/PicGo%7B09A118EF-04DB-1306-8BC8-2A7FA71FA441%7D.png)
